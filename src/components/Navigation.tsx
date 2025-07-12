@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, Bell, User, Plus, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useNavigate } from 'react-router-dom';
 
 interface NavigationProps {
   onAskQuestion: () => void;
@@ -10,6 +11,7 @@ interface NavigationProps {
 export default function Navigation({ onAskQuestion }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -23,10 +25,10 @@ export default function Navigation({ onAskQuestion }: NavigationProps) {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6 ml-8">
-              <a href="#" className="text-foreground hover:text-primary transition-colors">Questions</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">Tags</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">Users</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">Leaderboard</a>
+              <button onClick={() => navigate('/')} className="text-foreground hover:text-primary transition-colors">Questions</button>
+              <button onClick={() => navigate('/')} className="text-foreground hover:text-primary transition-colors">Tags</button>
+              <button onClick={() => navigate('/')} className="text-foreground hover:text-primary transition-colors">Users</button>
+              <button onClick={() => navigate('/dashboard')} className="text-foreground hover:text-primary transition-colors">Dashboard</button>
             </div>
           </div>
 
@@ -67,15 +69,15 @@ export default function Navigation({ onAskQuestion }: NavigationProps) {
             {/* User Menu */}
             <div className="flex items-center space-x-2">
               {isLoggedIn ? (
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
                   <User className="h-5 w-5" />
                 </Button>
               ) : (
                 <div className="hidden md:flex space-x-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => navigate('/auth')}>
                     Log In
                   </Button>
-                  <Button className="stackit-button-primary" size="sm">
+                  <Button className="stackit-button-primary" size="sm" onClick={() => navigate('/auth')}>
                     Sign Up
                   </Button>
                 </div>
@@ -109,10 +111,10 @@ export default function Navigation({ onAskQuestion }: NavigationProps) {
               
               {/* Mobile Navigation Links */}
               <div className="space-y-2">
-                <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Questions</a>
-                <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Tags</a>
-                <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Users</a>
-                <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Leaderboard</a>
+                <button onClick={() => navigate('/')} className="block py-2 text-foreground hover:text-primary transition-colors">Questions</button>
+                <button onClick={() => navigate('/')} className="block py-2 text-foreground hover:text-primary transition-colors">Tags</button>
+                <button onClick={() => navigate('/')} className="block py-2 text-foreground hover:text-primary transition-colors">Users</button>
+                <button onClick={() => navigate('/dashboard')} className="block py-2 text-foreground hover:text-primary transition-colors">Dashboard</button>
               </div>
 
               {/* Mobile Ask Question Button */}
@@ -127,10 +129,10 @@ export default function Navigation({ onAskQuestion }: NavigationProps) {
               {/* Mobile Auth Buttons */}
               {!isLoggedIn && (
                 <div className="space-y-2 pt-4 border-t border-border">
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" onClick={() => navigate('/auth')}>
                     Log In
                   </Button>
-                  <Button className="stackit-button-primary w-full">
+                  <Button className="stackit-button-primary w-full" onClick={() => navigate('/auth')}>
                     Sign Up
                   </Button>
                 </div>
